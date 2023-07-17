@@ -90,10 +90,11 @@ body {
     white-space: nowrap;
     overflow: hidden;
     height: 28px;
-    width: 110px;
+    width: 100px;
     margin: none;
     justify-content: center;
     align-items: center;
+    line-height: 1;
 }
 
 #login-hint {
@@ -160,6 +161,20 @@ body {
 #usernameInput, #passwordInput, #login-btn {
     width: 50dvw;
     transition: width 0.2s;
+}
+
+#create-room-div {
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+#room-name-input, #room-name-btn {
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+#room-name-input {
+    min-width: 10dvw;
 }
 
 /*  */

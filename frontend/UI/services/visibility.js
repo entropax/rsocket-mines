@@ -18,6 +18,11 @@ function render_level_1() {
             'login-btn': 'block',
             'login-div-1': 'block',
             'login-hint': 'block',
+            'create-room-div': 'none',
+            'room-name-input': 'none',
+            'room-name-btn': 'none',
+            'join-rooms': 'none',
+
 
             'knee-div': 'none',
             'foot-div': 'none',
@@ -48,6 +53,10 @@ function render_level_2(name) {
             'login-btn': 'none',
             'login-div-1': 'none',
             'login-hint': 'none',
+            'create-room-div': 'flex',
+            'room-name-input': 'flex',
+            'room-name-btn': 'flex',
+            'join-rooms': 'flex',
 
             'knee-div': 'block',
             'foot-div': 'flex',
