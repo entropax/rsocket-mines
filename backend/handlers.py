@@ -1,10 +1,8 @@
 import json
 import uuid
 import logging
-from dataclasses import dataclass, field
 from datetime import timedelta
-from typing import Optional, Awaitable, Dict
-from weakref import WeakValueDictionary
+from typing import Optional, Awaitable
 
 from rsocket.extensions.authentication import Authentication, AuthenticationSimple
 from rsocket.extensions.composite_metadata import CompositeMetadata
@@ -14,23 +12,11 @@ from rsocket.payload import Payload
 from rsocket.routing.request_router import RequestRouter
 from rsocket.routing.routing_request_handler import RoutingRequestHandler
 
+from backend.utils.storage import AppData, UserSessionData, SessionId
 from response_channel import response_stream_1, LoggingSubscriber
 from response_stream import response_stream_2
 from data_fixtures import large_data1
 
-
-class SessionId(str):
-    pass
-
-@dataclass()
-class UserSessionData:
-    username: str
-    password: str
-    session_id: SessionId
-
-@dataclass(frozen=True)
-class AppData:
-    user_session_by_id: Dict[SessionId, UserSessionData] = field(default_factory=WeakValueDictionary)
 
 app_data = AppData()
 
@@ -56,7 +42,7 @@ class CustomAppHandler:
                     if username != self._session.username and password != self._session.password:
                         raise Exception('Authentication error')
             if route == 'login' and self._session:
-                raise Exception('You are already loggin')
+                raise Exception('You are already logged in')
             logging.info('AUTH ROUTE TO LOGIN')
         else:
             raise Exception('Unsupported authentication')
@@ -103,16 +89,72 @@ class CustomAppHandler:
 
 
 
+        # @router.response('room.create')
+        # async def create_room(payload: Payload) -> Awaitable[Payload]:
+        #     channel_name = payload.data.decode('utf-8')
+        #     ensure_channel_exists(channel_name)
+        #     chat_data.channel_users[channel_name].add(self._session.session_id)
+        #     return create_response()
+        #
+        # @router.response('room.join')
+        # async def join_room(payload: Payload) -> Awaitable[Payload]:
+        #     channel_name = payload.data.decode('utf-8')
+        #     ensure_channel_exists(channel_name)
+        #     chat_data.channel_users[channel_name].add(self._session.session_id)
+        #     return create_response()
+        #
+        # @router.response('room.leave')
+        # async def leave_room(payload: Payload) -> Awaitable[Payload]:
+        #     channel_name = payload.data.decode('utf-8')
+        #     chat_data.channel_users[channel_name].discard(self._session.session_id)
+        #     return create_response()
+        #
+        # @router.stream('room.users')
+        # async def stream_room_users(payload: Payload) -> Publisher:
+        #     channel_name = utf8_decode(payload.data)
+        #
+        #     if channel_name not in chat_data.channel_users:
+        #         return EmptyStream()
+        #
+        #     count = len(chat_data.channel_users[channel_name])
+        #     generator = ((Payload(ensure_bytes(find_username_by_session(session_id))), index == count) for
+        #                  (index, session_id) in
+        #                  enumerate(chat_data.channel_users[channel_name], 1))
+        #
+        #     return StreamFromGenerator(lambda: generator)
+        #
+        # @router.stream('room.messages')
+        # async def stream_room_messages(payload: Payload) -> Publisher:
+        #     channel_name = utf8_decode(payload.data)
+        #
+        #     if channel_name not in chat_data.channel_users:
+        #         return EmptyStream()
+        #
+        #     count = len(chat_data.channel_users[channel_name])
+        #     generator = ((Payload(ensure_bytes(find_username_by_session(session_id))), index == count) for
+        #                  (index, session_id) in
+        #                  enumerate(chat_data.channel_users[channel_name], 1))
+        #
+        #     return StreamFromGenerator(lambda: generator)
+        #
+        # @router.stream('rooms')
+        # async def get_rooms() -> Publisher:
+        #     count = len(chat_data.channel_messages)
+        #     generator = ((Payload(ensure_bytes(channel)), index == count) for (index, channel) in
+        #                  enumerate(chat_data.channel_messages.keys(), 1))
+        #     return StreamFromGenerator(lambda: generator)
+
+
 
         @router.response('last_fnf')
         async def get_last_fnf():
             logging.info('Got single request')
-            return create_future(Payload(storage.last_fire_and_forget))
+            return create_future(Payload(app_data.last_fire_and_forget))
 
         @router.response('last_metadata_push')
         async def get_last_metadata_push():
             logging.info('Got single request')
-            return create_future(Payload(storage.last_metadata_push))
+            return create_future(Payload(app_data.last_metadata_push))
 
         @router.response('large_data')
         async def get_large_data():
@@ -129,14 +171,14 @@ class CustomAppHandler:
 
         @router.fire_and_forget('no_response')
         async def no_response(payload: Payload, composite_metadata):
-            storage.last_fire_and_forget = payload.data
+            app_data.last_fire_and_forget = payload.data
             logging.info('No response sent to client')
 
         @router.metadata_push('metadata_push')
         async def metadata_push(payload: Payload, composite_metadata: CompositeMetadata):
             for item in composite_metadata.items:
                 if item.encoding == b'text/plain':
-                    storage.last_metadata_push = item.content
+                    app_data.last_metadata_push = item.content
 
         @router.channel('channel')
         async def channel_response(payload, composite_metadata):
