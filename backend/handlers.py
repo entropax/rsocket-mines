@@ -50,16 +50,13 @@ class CustomAppHandler:
             if route != 'login':
                 if self._session is None:
                     raise Exception('You need login for new session')  # error send to socket like response, it's okey
-
                 else:
                     username = utf8_decode(authentication.username)
                     password = utf8_decode(authentication.password)
-                    print(username)
-                    print(password)
-                    print(self._session.username)
-                    print(self._session.password)
                     if username != self._session.username and password != self._session.password:
                         raise Exception('Authentication error')
+            if route == 'login' and self._session:
+                raise Exception('You are already loggin')
             logging.info('AUTH ROUTE TO LOGIN')
         else:
             raise Exception('Unsupported authentication')
@@ -78,15 +75,18 @@ class CustomAppHandler:
                     session_id = SessionId(uuid.uuid4())
                     self._session = UserSessionData(username, password, session_id)
                     app_data.user_session_by_id[session_id] = self._session
-                    return create_response(ensure_bytes('{"message": "Welcome to chat, session_id=", "status": true}'))
+                    response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
+                    return create_future(Payload(response))
+                    # return create_response(ensure_bytes(response))
 
-            return create_response(ensure_bytes('{"message": "You not specify login with pass", "status": "error"}'))
+            response = '{"message": "You not specify login with pass", "status": "error"}'.encode()
+            return create_future(Payload(response))
+            # return create_response(ensure_bytes('{"message": "You not specify login with pass", "status": "error"}'))
 
         @router.response('logout')
         async def logout(payload: Payload) -> Awaitable[Payload]:
             try:
-                self._session.session_id = None
-                # app_data.user_session_by_id[session_id] = self._session
+                self._session = None
                 return create_response(ensure_bytes('success'))
                 # return create_response(ensure_bytes('{"message": "Welcome to chat, session_id=", "status": true}'))
 
@@ -102,10 +102,7 @@ class CustomAppHandler:
             return create_future(Payload(response))
 
 
-        @router.response('single_request')
-        async def single_request_response(payload, composite_metadata):
-            logging.info('Got single request')
-            return create_future(Payload(b'single_response'))
+
 
         @router.response('last_fnf')
         async def get_last_fnf():
