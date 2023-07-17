@@ -1,4 +1,4 @@
-function handle_wrong_pwd() {
+function handle_wrong_credentials() {
     var login_hint = document.getElementById('login-hint');
     login_hint.textContent = `* This nick-name has already occupied 
     please provide another one :3`;
@@ -15,4 +15,4 @@ function handle_wrong_pwd() {
         // продолжительности анимации, умноженной на количество повторов.
         
       }); 
-};
+}

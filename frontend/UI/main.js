@@ -8,7 +8,11 @@ login_btn.addEventListener('click', function(event) {
     var login_input = document.getElementById('usernameInput');
     var name = login_input && 'value' in login_input ? login_input.value : '';
     
-        if (true) {
+
+    var randomNum = Math.random();
+    var randomBool = randomNum < 0.5;
+
+        if (randomBool) {
 
             resize_level_2();
             render_level_2(name);
@@ -16,7 +20,7 @@ login_btn.addEventListener('click', function(event) {
             render_level_2_mid();
             
         } else {
-            handle_wrong_pwd();
+            handle_wrong_credentials();
         }
     })
 

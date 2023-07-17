@@ -16,6 +16,8 @@ function render_level_1() {
             'usernameInput': 'block',
             'passwordInput': 'block',
             'login-btn': 'block',
+            'login-div-1': 'block',
+            'login-hint': 'block',
 
             'knee-div': 'none',
             'foot-div': 'none',
@@ -44,6 +46,8 @@ function render_level_2(name) {
             'usernameInput': 'none',
             'passwordInput': 'none',
             'login-btn': 'none',
+            'login-div-1': 'none',
+            'login-hint': 'none',
 
             'knee-div': 'block',
             'foot-div': 'flex',
@@ -57,6 +61,9 @@ function render_level_2(name) {
 
     var show_stat = document.getElementById('show-stat');
     show_stat.textContent = 'Score: foo bar';
+
+    var login_hint = document.getElementById('login-hint');
+    login_hint.textContent = '';
 }
 
 

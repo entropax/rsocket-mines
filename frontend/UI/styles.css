@@ -5,22 +5,26 @@ body {
     background-color: rgba(255, 252, 220, 0.582);
     margin: 0;
     padding: 0;
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: height 0.2s;
+    transition: width 0.2s;
 }
 
 .container {
-    height: 98vh;
-    width: 99vw;
+    height: 98dvh;
+    width: 99dvw;
     margin: 4px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: height 0.2s;
+    transition: width 0.2s;
 }
 
 .box {
@@ -62,7 +66,7 @@ body {
 
 #show-name {
     font-family: 'Lobster', cursive;
-    font-size: 18pt;
+    font-size: 20pt;
     flex: 0 1 45%;
     padding-left: 10px;
     white-space: nowrap;
@@ -85,9 +89,11 @@ body {
     flex: default;
     white-space: nowrap;
     overflow: hidden;
-    height: 5.5vh;
-    width: 98;
+    height: 28px;
+    width: 110px;
     margin: none;
+    justify-content: center;
+    align-items: center;
 }
 
 #login-hint {
@@ -105,11 +111,12 @@ body {
 /* top */
 /*  */
 #box-1 {
-    height: 19vh;
+    height: 19dvh;
     background-color: blueviolet;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: height 0.2s;
 }
 
 #hair-div {
@@ -134,8 +141,9 @@ body {
 /* mid */
 /*  */
 #box-2 {
-    height: 79vh;
+    height: 79dvh;
     flex-direction: column;
+    transition: height 0.2s;
 }
 
 #login-div-0 {
@@ -150,16 +158,18 @@ body {
 }
 
 #usernameInput, #passwordInput, #login-btn {
-    width: 50vw;
+    width: 50dvw;
+    transition: width 0.2s;
 }
 
 /*  */
 /* bottom */
 /*  */
 #box-3 {
-    height: 0vh;
+    height: 0dvh;
     display: flex;
     flex-direction: column;
+    transition: height 0.2s;
 }
 
 #knee-div {
@@ -175,6 +185,7 @@ body {
 }
 
 #message-field {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 10dvw;
     padding-left: 10px;
 }
