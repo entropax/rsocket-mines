@@ -11,6 +11,7 @@ function render_level_2_mid() {
         document.getElementById('game_start').addEventListener('click', function() {
             // Handle 'game_start' click event
             document.getElementById('game_board').innerHTML = "Game Started!";
-        });
-    });
-};
+        })
+    })
+}
+

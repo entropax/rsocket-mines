@@ -24,7 +24,7 @@ body {
 }
 
 .box {
-    background-color:palevioletred;
+    background-color:rgb(175, 114, 231);
     margin: 4px;
     border-width: thick;
     display: flex;
@@ -63,7 +63,7 @@ body {
 #show-name {
     font-family: 'Lobster', cursive;
     font-size: 18pt;
-    flex: 0 1 40%;
+    flex: 0 1 45%;
     padding-left: 10px;
     white-space: nowrap;
     overflow: hidden;
@@ -72,12 +72,22 @@ body {
 
 #show-stat {
     font-size: 14pt;
-    flex: 1 1 60%;
+    flex: 1 1 45%;
     padding-left: 10px;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+#logoutButton {
+    font-size: 14pt;
+    flex: default;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 5.5vh;
+    width: 98;
+    margin: none;
 }
 
 #login-hint {
@@ -86,7 +96,7 @@ body {
     margin-bottom: 8px;
 }
 
-#login-hint, #login-input, #login-btn, #message-field, #chat-btn{
+#login-hint, #loginForm, #login-btn, #message-field, #chat-btn, #create-game{
     font-size: 14pt;
 }
 
@@ -130,12 +140,18 @@ body {
 
 #login-div-0 {
     flex-direction: row;
+    flex-wrap: nowrap;
 }
 
-#login-div-1 {
+#loginForm {
+    display: block;
     flex-direction: row;
+    flex-wrap: nowrap;
 }
 
+#usernameInput, #passwordInput, #login-btn {
+    width: 50vw;
+}
 
 /*  */
 /* bottom */
@@ -147,13 +163,12 @@ body {
 }
 
 #knee-div {
-    background-color: palegoldenrod;
+    background-color: rgb(175, 114, 231);
     flex-grow: 1;
     margin: 4px;
 }
 
 #foot-div {
-    display: flex;
     flex-direction: row;
     box-sizing: border-box;
     margin: 4px;

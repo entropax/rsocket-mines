@@ -19,33 +19,66 @@
         <div hidden id="eye-div" class="top level-2">
             <p hidden id="show-name" class="top level-2"></p>
             <p hidden id="show-stat" class="top level-2"></p>
+            <button hidden id="logoutButton" class="top level-2">Sing out</button>
         </div>
+
 
     </div>
 
 
+
+
+
+
+
+    
+
     <div id="box-2" class="box">
 
-        <div id="login-div-0" class="level-1">
+        <!-- <div id="login-div-0" class="level-1">
             <input type="text" id="login-input" class="level-1" placeholder="Enter your Nick-Name">
             <button id="login-btn" class="level-1">Send</button>
         </div>
-        
+
+        <div hidden class="level-2">
+            <button id="create-game" class="level-2">Create Game</button>
+        </div>
+
+        <div hidden class="level-2">
+            <div hidden class="level-2>
+                <button hidden id="join-game" class="level-2">Join Game</button>
+                <p hidden class="level-2">game info</p>
+            </div>
+        </div> -->
+        <div id="login-div-0" class="level-1">
+            <form id="loginForm" class="level-1">
+
+                <input type="text" name="username" placeholder="Login" id="usernameInput" class="level-1">
+                <input type="password" name="password"  placeholder="Password" id="passwordInput" class="level-1">
+                <input type="submit" value="Sign in / up" id="login-btn" class="level-1">
+                <div id="login_output" class="level-1">
+                    <p class="level-1"></p>
+                </div>
+
+            </form>
+        </div>
+
         <div id="login-div-1" class="level-1">
             <p id="login-hint" class="level-1"></p>
         </div>
 
-        <div hidden class="level-3">
-            <div>
 
-            </div>
-
-            <button id="game_start">Start Game</button>
-
-        </div>
 
 
     </div>
+
+
+
+
+
+
+
+
 
 
     <div hidden id="box-3" class="bottom level-2">
