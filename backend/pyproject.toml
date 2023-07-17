@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "rsocket-mines"
+version = "0.0.1"
+description = "Minesweeper game implemented with Rsockect with python backennd"
+authors = ["Sol 'Entropax' Maxwell <sol@entropax.ru>",]
+license = "SOL LICENSE, SL"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.8.4"
+rsocket = { version = "^0.4.11", extras = [
+    "rx",
+    "reactivex",
+    "aiohttp",
+    "quic",
+    "cli",
+    "optimized",
+    "cloudevents"
+]}
+anyio = "^3.7.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+flake8 = "*"
+neovim = "*"
+pynvim = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
