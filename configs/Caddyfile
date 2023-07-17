@@ -1,0 +1,29 @@
+{
+	debug
+}
+
+:80 {
+    root * ./static/ # указывает каталог, где хранятся ваши HTML-файлы
+    file_server # включает file_server для обслуживания статических файлов
+}
+:443 {
+    root * /static/ # указывает каталог, где хранятся ваши HTML-файлы
+    file_server # включает file_server для обслуживания статических файлов
+}
+
+:8080 {
+    root * /static # указывает каталог, где хранятся ваши HTML-файлы
+    file_server # включает file_server для обслуживания статических файлов
+}
+
+# for docker-compose (name server get from internal docker services)
+:9000 {
+    reverse_proxy server:9090 {
+    }
+}
+
+# for dev
+#:9000 {
+#    reverse_proxy :9090 {
+#    }
+#}
