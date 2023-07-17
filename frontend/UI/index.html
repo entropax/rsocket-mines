@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RSocketBomb</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">  
+        <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="container">
+
+    <div id="box-1" class="box">
+
+        <div id="hair-div" class="level-1">
+            <h1 id="welcome" class="level-1">Welcome to the world of tomorrow!</h1>
+        </div>
+
+        <div hidden id="eye-div" class="top level-2">
+            <p hidden id="show-name" class="top level-2"></p>
+            <p hidden id="show-stat" class="top level-2"></p>
+        </div>
+
+    </div>
+
+
+    <div id="box-2" class="box">
+
+        <div id="login-div-0" class="level-1">
+            <input type="text" id="login-input" class="level-1" placeholder="Enter your Nick-Name">
+            <button id="login-btn" class="level-1">Send</button>
+        </div>
+        
+        <div id="login-div-1" class="level-1">
+            <p id="login-hint" class="level-1"></p>
+        </div>
+
+        <div hidden class="level-3">
+            <div>
+
+            </div>
+
+            <button id="game_start">Start Game</button>
+
+        </div>
+
+
+    </div>
+
+
+    <div hidden id="box-3" class="bottom level-2">
+
+        <div hidden id="knee-div" class="bottom level-2">
+        </div>
+
+        <div hidden id="foot-div" class="bottom level-2">
+            <input hidden type="input" id="message-field" class="bottom level-2" placeholder="Message">
+            <button hidden id="chat-btn" class="bottom level-2"> Send </button>
+        </div>
+
+    </div>
+
+  </div>
+  <script src="services/visibility.js"></script>
+  <script src="services/top.js"></script>
+  <script src="services/mid.js"></script>
+  <script src="services/bot.js"></script>
+  <script src="services/resize.js"></script>
+  <script src="services/wrong_pwd_handler.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
