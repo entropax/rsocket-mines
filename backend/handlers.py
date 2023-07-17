@@ -54,7 +54,11 @@ class CustomAppHandler:
                 else:
                     username = utf8_decode(authentication.username)
                     password = utf8_decode(authentication.password)
-                    if username == self._session.username and password != self._session.password:
+                    print(username)
+                    print(password)
+                    print(self._session.username)
+                    print(self._session.password)
+                    if username != self._session.username and password != self._session.password:
                         raise Exception('Authentication error')
             logging.info('AUTH ROUTE TO LOGIN')
         else:
@@ -78,11 +82,24 @@ class CustomAppHandler:
 
             return create_response(ensure_bytes('{"message": "You not specify login with pass", "status": "error"}'))
 
+        @router.response('logout')
+        async def logout(payload: Payload) -> Awaitable[Payload]:
+            try:
+                self._session.session_id = None
+                # app_data.user_session_by_id[session_id] = self._session
+                return create_response(ensure_bytes('success'))
+                # return create_response(ensure_bytes('{"message": "Welcome to chat, session_id=", "status": true}'))
+
+            except Exception as e:
+                return create_response(ensure_bytes('{"message": "You not specify login with pass", "status": "error"}'))
+
         @router.response('echo')
         async def echo(payload: Payload) -> Awaitable[Payload]:
             username = self._session.username
             data = utf8_decode(payload.data)
-            return create_response(ensure_bytes(f'Welcome to chat, {username} you send MSG: {data}'))
+            response = f'Welcome to chat, {username} you send MSG: {data}'.encode()
+            # return create_response(ensure_bytes(f'Welcome to chat, {username} you send MSG: {data}'))
+            return create_future(Payload(response))
 
 
         @router.response('single_request')

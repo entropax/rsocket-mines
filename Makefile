@@ -24,11 +24,11 @@ dev-run-server:
 	@echo "backend server run"
 	cd backend && poetry update && poetry run python app.py
 
-dev-run-caddy:
+dev-run-caddy: dev-frontend-build
 	@echo "static server with proxy (Caddy2) run"
 	sudo caddy run --config configs/Caddyfile
 
-dev-frontend-dev-build:
+dev-frontend-build:
 	@echo "start front building"
 	cd frontend && npm run build && cp dist/bundle.js ../static/js/app.js
 	cd frontend && cp index.html ../static/

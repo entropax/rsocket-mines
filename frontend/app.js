@@ -86,13 +86,13 @@ const connector = makeConnector();
 const rsocket = await connector.connect();
 
 // only for DEBUG
-await new Promise(r => setTimeout(r, 2000));
-socketStatus.innerText = socketStatus.innerText + " work";
 await new Promise(r => setTimeout(r, 1000));
 socketStatus.innerText = socketStatus.innerText + " work";
-await new Promise(r => setTimeout(r, 1000));
+await new Promise(r => setTimeout(r, 500));
 socketStatus.innerText = socketStatus.innerText + " work";
-await new Promise(r => setTimeout(r, 1000));
+await new Promise(r => setTimeout(r, 500));
+socketStatus.innerText = socketStatus.innerText + " work";
+await new Promise(r => setTimeout(r, 500));
 socketStatus.innerText = "Rsocket established on: " + url;
 
 
@@ -158,12 +158,44 @@ document.querySelector('#messageForm').addEventListener('submit', async (event) 
   event.preventDefault();
   let user = sessionStorage.getItem('user');
   let pass = sessionStorage.getItem('pass');
+  console.log('jeroifjreoifj_____________*')
+  console.log(user)
+  console.log(pass)
+  console.log('jeroifjreoifj_____________*')
   let messageInput = document.getElementById('messageInput').value;
   let message_output = document.querySelector('#message_output p');
   let response = await requestResponse(rsocket, 'echo', messageInput, user, pass);
   message_output.innerText = "Last response message:\n" + response.data;
 });
 
+document.querySelector('#logoutButton').
+  addEventListener('click', async (event) => {
+  let user = sessionStorage.getItem('user');
+  let pass = sessionStorage.getItem('pass');
+  let response = await requestResponse(rsocket, 'logout', '', user, pass);
+
+  // let stringData = new TextDecoder().decode(response.data);
+  // let jsonData = JSON.parse(stringData);
+  // let status = jsonData.status;
+  let status = new TextDecoder().decode(response.data);
+  console.log('jeroifjreoifj_____________*')
+  console.log(status)
+  console.log('jeroifjreoifj_____________*')
+
+  if(status === 'success') {
+    // сохранение значения в сессионном хранилище
+    console.log('jeroifjreoifj_____________*')
+    console.log('HUEEYY')
+    console.log('jeroifjreoifj_____________*')
+    sessionStorage.setItem('user', undefined);
+    sessionStorage.setItem('pass', undefined);
+    // sessionStorage.removeItem('user');
+    // sessionStorage.removeItem('pass');
+    document.querySelector('#message').innerText = "User has logged out";
+  }
+
+
+});
 // OLD PROTOTYPE
 // await main()
 //   // .then(() => exit())
