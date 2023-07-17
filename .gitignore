@@ -1,0 +1,96 @@
+# Byte-compiled / optimized / DLL files TODO fix ugly way
+__pycache__/
+**/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+#*.py[cod]
+#*$py.class
+
+# Testing
+# .hypothesis/
+.pytest_cache/
+
+# DB
+dump.rdb
+
+# Logs
+/var
+*.log
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# Installer logs and Pip
+get-pip.py
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Other
+req.txt
+beat.sh
+flower.sh
+/backend/.idea
+/env
+/.idea
+
+
+
+# PEP 582
+__pypackages__/
+
+# develop environments if needs
+poetry.lock
+.vscode
+.env
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# mkdocs documentation
+/site
+
+# frontend build
+frontend/dist/
+static
+
+# Sphinx documentation
+docs/_build/
+
+# JS
+frontend/node_modules
+frontend/package-lock.json
+
+# Type checker
+# WARNING!!! this need for .venv distribute !DO NOT IGNORE!
+.pyre/
+/test
+# *.so
+.venv
+backend/.venv
+# venv/
+# dist/
+# downloads/
+# eggs/
+# .eggs/
+# lib/
+# lib64/
+# parts/
+# sdist/
+# var/
+# wheels/
+# pip-wheel-metadata/
+# share/python-wheels/
+# *.egg-info/
+# .installed.cfg
+# *.egg
+# .python-version
+
+# Django/Flask stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache
