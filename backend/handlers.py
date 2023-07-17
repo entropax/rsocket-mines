@@ -85,12 +85,10 @@ class CustomAppHandler:
         @router.response('logout')
         async def logout(payload: Payload) -> Awaitable[Payload]:
             try:
-                # logging.info('RUN LOGIN')
-                # session_id = SessionId(uuid.uuid4())
-                # self._session = UserSessionData(username, password, session_id)
+                self._session.session_id = None
                 # app_data.user_session_by_id[session_id] = self._session
                 return create_response(ensure_bytes('success'))
-                return create_response(ensure_bytes('{"message": "Welcome to chat, session_id=", "status": true}'))
+                # return create_response(ensure_bytes('{"message": "Welcome to chat, session_id=", "status": true}'))
 
             except Exception as e:
                 return create_response(ensure_bytes('{"message": "You not specify login with pass", "status": "error"}'))

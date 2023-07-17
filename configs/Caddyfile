@@ -17,13 +17,13 @@
 }
 
 # for docker-compose (name server get from internal docker services)
-:9000 {
-    reverse_proxy server:9090 {
-    }
-}
-
-# for dev
 #:9000 {
-#    reverse_proxy :9090 {
+#    reverse_proxy server:9090 {
 #    }
 #}
+
+# for dev
+:9000 {
+    reverse_proxy :9090 {
+    }
+}
