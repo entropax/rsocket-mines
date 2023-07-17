@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    volumes:
+      - static-files:/src/static
+      # - ./frontend:/app/static
+
+  server:
+    build: ./backend
+    # volumes:
+      # - ./app:/app/backend
+    expose:
+      - "9090"
+    # ports:
+      # - "8080:9090"
+      # - "9090"
+
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+      - "9000:9000"
+    volumes:
+      - ./configs/Caddyfile:/etc/caddy/Caddyfile
+      - static-files:/static
+
+volumes:
+  static-files:
