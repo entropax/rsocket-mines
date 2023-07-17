@@ -1,0 +1,15 @@
+FROM node:20-alpine
+
+WORKDIR /src
+
+COPY ./package.json .
+COPY ./webpack.config.js .
+COPY ./app.js .
+COPY ./index.html .
+
+RUN npm install
+RUN npm run build
+RUN mkdir -p /src/static/js
+RUN cp ./dist/bundle.js ./static/js/app.js && cp ./index.html ./static
+
+CMD npm install && npm run build && mkdir -p /src/static/js && cp ./dist/bundle.js ./static/js/app.js && cp ./dist/bundle.js.map ./static/js && cp ./index.html ./static
