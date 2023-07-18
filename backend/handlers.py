@@ -1,3 +1,4 @@
+import asyncio
 import json
 import uuid
 import logging
@@ -11,6 +12,8 @@ from rsocket.frame_helpers import ensure_bytes
 from rsocket.payload import Payload
 from rsocket.routing.request_router import RequestRouter
 from rsocket.routing.routing_request_handler import RoutingRequestHandler
+from rsocket.streams.stream_from_generator import StreamFromGenerator
+from rsocket.streams.stream_from_async_generator import StreamFromAsyncGenerator
 
 from backend.utils.storage import AppData, UserSessionData, SessionId
 from response_channel import response_stream_1, LoggingSubscriber
@@ -19,7 +22,6 @@ from data_fixtures import large_data1
 
 
 app_data = AppData()
-
 
 class CustomAppHandler:
     def __init__(self):
@@ -59,7 +61,7 @@ class CustomAppHandler:
                 if username and password:
                     logging.info('RUN LOGIN')
                     session_id = SessionId(uuid.uuid4())
-                    self._session = UserSessionData(username, password, session_id)
+                    self._session = UserSessionData(username, password, session_id, [])
                     app_data.user_session_by_id[session_id] = self._session
                     response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
                     return create_future(Payload(response))
@@ -87,7 +89,51 @@ class CustomAppHandler:
             # return create_response(ensure_bytes(f'Welcome to chat, {username} you send MSG: {data}'))
             return create_future(Payload(response))
 
+        @router.fire_and_forget('fnf')
+        async def get_fnf_message(payload: Payload, composite_metadata):
+            logging.info('Got single message from: user')
+            message = utf8_decode(payload.data)
+            user_id = self._session.session_id
+            username = app_data.user_session_by_id[user_id].username
+            # кладем всем юзерам
+            for session_data in app_data.user_session_by_id.values():
+                print(session_data)
+                session_data.new_messages.append([username, message])
 
+            # print('lref')
+            # idd = self._session.session_id
+            # print(idd)
+            # print(app_data.user_sesskion_by_id[idd])
+            # put in storage
+            # for user in app_data: print(i)
+
+            # storage.last_fire_and_forget = payload.data
+            logging.info('No response sent to client')
+
+        @router.stream('chat.messages')
+        async def stream_chat(**kwargs):
+            user_id = self._session.session_id
+            def response_stream(response_count=4, delay_between_messages=timedelta(0), user_id=user_id):
+                async def generator(user_id=user_id):
+                    current_response = 0
+                    # for i in range(response_count):
+                    is_complete = False
+                    while True:
+                        if not app_data.user_session_by_id[user_id].new_messages:
+                            await asyncio.sleep(0.2)
+                            # yield Payload('Empty'.encode('utf-8'), b'metadata'), is_complete
+                        else:
+                            while app_data.user_session_by_id[user_id].new_messages:
+                                pair = app_data.user_session_by_id[user_id].new_messages.pop(0)
+                                user = pair[0]
+                                message = pair[1]
+                                # message = app_data.user_session_by_id[user_id].new_messages.pop(0)  # извлекаем первое сообщение и удаляем его из списка
+                                message = f'{user} say: {message} 💩'
+                                yield Payload(message.encode('utf-8'), b'metadata'), is_complete
+                return StreamFromAsyncGenerator(generator, delay_between_messages)
+
+            logging.info('Got stream chat request')
+            return response_stream(delay_between_messages=timedelta(seconds=0.5))
 
         # @router.response('room.create')
         # async def create_room(payload: Payload) -> Awaitable[Payload]:
@@ -149,7 +195,6 @@ class CustomAppHandler:
         @router.response('last_fnf')
         async def get_last_fnf():
             logging.info('Got single request')
-            return create_future(Payload(app_data.last_fire_and_forget))
 
         @router.response('last_metadata_push')
         async def get_last_metadata_push():
@@ -166,6 +211,9 @@ class CustomAppHandler:
 
         @router.stream('stream')
         async def stream_response(payload, composite_metadata):
+            print(utf8_decode(payload.data))
+            print(composite_metadata.items)
+            for i in (composite_metadata.items): print(i)
             logging.info('Got stream request')
             return response_stream_1()
 
@@ -190,7 +238,7 @@ class CustomAppHandler:
         @router.stream('slow_stream')
         async def stream_slow(**kwargs):
             logging.info('Got slow stream request')
-            return response_stream_2(delay_between_messages=timedelta(seconds=2))
+            return response_stream_2(delay_between_messages=timedelta(seconds=1))
 
         return router
 

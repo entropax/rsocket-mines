@@ -1,7 +1,8 @@
+import asyncio
 from _weakrefset import WeakSet
 from asyncio import Queue
 from collections import defaultdict
-from typing import Optional, Dict, Set
+from typing import Optional, Dict, Set, List
 from weakref import WeakValueDictionary
 from dataclasses import dataclass, field
 
@@ -14,12 +15,16 @@ class UserSessionData:
     username: str
     password: str
     session_id: SessionId
+    new_messages: list[list[str,str]]
+
 
 @dataclass()
 class AppData:
     last_metadata_push: Optional[bytes] = None
-    last_fire_and_forget: Optional[bytes] = None
+    # user_session_by_id: Dict[SessionId, UserSessionData] = field(default_factory=WeakValueDictionary)
     user_session_by_id: Dict[SessionId, UserSessionData] = field(default_factory=WeakValueDictionary)
+
+
 @dataclass(frozen=True)
 class RoomData:
     user_session_by_id: Dict[SessionId, UserSessionData] = field(default_factory=WeakValueDictionary)
