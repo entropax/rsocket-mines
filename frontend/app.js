@@ -9,12 +9,15 @@ import {
 import { Logger } from "./utils/logger.js";
 import { makeConnector } from "./utils/connector.js";
 import { requestResponse } from "./utils/requestResponse.js";
+import { requestStream } from "./utils/requestStream.js";
 import {
     handleLoginFormSubmit,
     handleLogoutFormSubmit,
-    handleMessageFormSubmit
+    handleMessageFormSubmit,
+    handleChatMessageSend,
 } from './utils/handlers.js';
 import { setSessionStorage } from './utils/sessionStorage.js';
+import { addChat } from './chat.js';
 
 // CONSTANTS supstitute from ENV with webpack builder
 const URL = process.env.URL;
@@ -25,6 +28,9 @@ const LIFETIME = process.env.LIFETIME;
 async function main() {
     // set dummpy creds
     setSessionStorage()
+
+    // add chat on page
+    addChat();
 
     const connector = makeConnector(
         KEEPALIVE,
@@ -44,6 +50,9 @@ async function main() {
         'click', async (event) => handleLogoutFormSubmit(event, rsocket));
     document.querySelector('#messageForm').addEventListener(
         'submit', async (event) => handleMessageFormSubmit(event, rsocket));
+    document.querySelector('#messageButtonSend').addEventListener(
+        'click', async (event) => handleChatMessageSend(event, rsocket));
+
 }
 
 main().catch(error => {

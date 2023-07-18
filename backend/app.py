@@ -2,11 +2,11 @@ import asyncio
 
 # import asyncclick as click
 from server import Server
-from utils.storage import Storage
+from utils.storage import AppData
 
 
 class MinesweepersBackend:
-    def __init__(self, storage: Storage, server: Server) -> None:
+    def __init__(self, storage: AppData, server: Server) -> None:
         self.storage = storage
         self.server = server
 
@@ -20,7 +20,7 @@ class MinesweepersBackend:
 
 if __name__ == '__main__':
     app = MinesweepersBackend(
-        Storage(),
+        AppData(),
         Server()
     )
     asyncio.run(app.start())
