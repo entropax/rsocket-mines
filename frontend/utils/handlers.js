@@ -1,6 +1,9 @@
 // formHandlers
 import { requestResponse } from "./requestResponse.js";
+import { requestStream } from "./requestStream.js";
+import { requestFnf } from "./requestFnf.js";
 
+import { Logger } from "./logger.js";
 
 export const handleLoginFormSubmit = async (event, rsocket) => {
   event.preventDefault();
@@ -11,14 +14,25 @@ export const handleLoginFormSubmit = async (event, rsocket) => {
   let response = await requestResponse(rsocket, 'login', data, user, pass);
   login_output.innerText = response.data;
 
-  // let stringData = new TextDecoder().decode(response.data);
+  let stringData = new TextDecoder().decode(response.data);
   let jsonData = JSON.parse(response.data);
   let status = jsonData.status;
+
+  // await requestStream(rsocket, 'stream', '', user, pass);
+
 
   if(status === true) {
     // сохранение значения в сессионном хранилище
     sessionStorage.setItem('user', user);
     sessionStorage.setItem('pass', pass);
+
+    await requestStream(rsocket, 'chat.messages', user, pass)
+        .then(result => {
+            console.log("Result of requestStream: ", result);
+        })
+        .catch(error => {
+            console.error("Error from requestStream: ", error);
+        });
   }
 };
 
@@ -52,3 +66,12 @@ export const handleMessageFormSubmit = async (event, rsocket) => {
   let response = await requestResponse(rsocket, 'echo', messageInput, user, pass);
   message_output.innerText = "Last response message:\n" + response.data;
 };
+
+export const handleChatMessageSend = async (event, rsocket) => {
+  event.preventDefault();
+  console.log("FNF sending")
+  let user = sessionStorage.getItem('user');
+  let pass = sessionStorage.getItem('pass');
+  let messageInput = document.getElementById('messageFormSend').value;
+  await requestFnf(rsocket, 'fnf', messageInput, user, pass);
+}

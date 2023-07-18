@@ -3,7 +3,6 @@ import {
   encodeSimpleAuthMetadata,
   encodeRoute,
   WellKnownMimeType as KnownMimeType,
-  // TEXT_PLAIN,
 } from "rsocket-composite-metadata";
 
 import { Logger } from "./logger.js";
@@ -25,7 +24,7 @@ export async function requestResponse(rsocket, route, data, user, pass) {
       {
         onError: (e) => {
           // reject(e);
-          console.log(e);
+          // console.log(e);
           resolve({"data": e});
           // resolve(null);
         },
