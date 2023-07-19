@@ -28,7 +28,7 @@ export const handleLoginFormSubmit = async (event, rsocket) => {
 
     await requestStream(rsocket, 'chat.messages', user, pass)
         .then(result => {
-            console.log("Result of requestStream: ", result);
+            // console.log("Result of requestStream: ", result);
         })
         .catch(error => {
             console.error("Error from requestStream: ", error);
@@ -70,8 +70,11 @@ export const handleMessageFormSubmit = async (event, rsocket) => {
 export const handleChatMessageSend = async (event, rsocket) => {
   event.preventDefault();
   console.log("FNF sending")
+  let date = new Date();
+  let formattedDate = date.toISOString();
   let user = sessionStorage.getItem('user');
   let pass = sessionStorage.getItem('pass');
   let messageInput = document.getElementById('messageFormSend').value;
-  await requestFnf(rsocket, 'fnf', messageInput, user, pass);
+  let payload = JSON.stringify({"message": messageInput, "time": formattedDate})
+  await requestFnf(rsocket, 'fnf', payload, user, pass);
 }

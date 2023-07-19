@@ -6,12 +6,12 @@
 
 localhost: {
     root * ./static
-    file_server
+   file_server
     encode zstd gzip
 }
 
 # Python backend ws proxy
-localhost:9000 {
-    reverse_proxy localhost:9090 {
+:9000 {
+    reverse_proxy :9090 {
     }
 }

@@ -15,11 +15,12 @@ class UserSessionData:
     username: str
     password: str
     session_id: SessionId
-    new_messages: list[list[str,str]]
+    new_messages: list[list[str, str, str]]
 
 
 @dataclass()
 class AppData:
+    sessions: Dict = field(default_factory=dict)
     last_metadata_push: Optional[bytes] = None
     # user_session_by_id: Dict[SessionId, UserSessionData] = field(default_factory=WeakValueDictionary)
     user_session_by_id: Dict[SessionId, UserSessionData] = field(default_factory=WeakValueDictionary)
