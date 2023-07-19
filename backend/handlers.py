@@ -115,8 +115,12 @@ class CustomAppHandler:
             username = app_data.user_session_by_id[user_id].username
             # кладем всем юзерам
             for session_data in app_data.user_session_by_id.values():
-                print(session_data)
                 session_data.new_messages.append([username, message['message'], message['time']])
+                if len(app_data.last_messages) > 10:
+                    app_data.last_messages.pop(0)
+                    app_data.last_messages.append([username, message['message'], message['time']])
+                else:
+                    app_data.last_messages.append([username, message['message'], message['time']])
 
             # storage.last_fire_and_forget = payload.data
             logging.info('No response sent to client')
@@ -129,6 +133,18 @@ class CustomAppHandler:
                     current_response = 0
                     # for i in range(response_count):
                     is_complete = False
+                    if len(app_data.last_messages) > 10:
+                        for msg in app_data.last_messages:
+                            now = datetime.utcnow()
+                            user = msg[0]
+                            message = msg[1]
+                            time = msg[2]
+                            date_object = datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ")
+                            formatted_time = date_object.strftime("%M:%S.%f")[:-3]
+                            formatted_time_send = now.strftime("%M:%S.%f")[:-3]
+                            message = f'{user} say: {message}\
+                            ((send:{formatted_time} || receive{formatted_time_send}))'
+                            yield Payload(message.encode('utf-8'), b'metadata'), is_complete
                     while True:
                         try:
                             if not app_data.user_session_by_id[user_id].new_messages:
@@ -156,7 +172,7 @@ class CustomAppHandler:
                 return StreamFromAsyncGenerator(generator, delay_between_messages)
 
             logging.info('Got stream chat request')
-            return response_stream(delay_between_messages=timedelta(seconds=0.25))
+            return response_stream(delay_between_messages=timedelta(seconds=0.1))
 
         # @router.response('room.create')
         # async def create_room(payload: Payload) -> Awaitable[Payload]:

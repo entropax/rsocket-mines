@@ -24,6 +24,7 @@ class AppData:
     last_metadata_push: Optional[bytes] = None
     # user_session_by_id: Dict[SessionId, UserSessionData] = field(default_factory=WeakValueDictionary)
     user_session_by_id: Dict[SessionId, UserSessionData] = field(default_factory=WeakValueDictionary)
+    last_messages: list[list[str, str, str]] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
