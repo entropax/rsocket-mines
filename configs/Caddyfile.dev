@@ -4,14 +4,14 @@
 }
 
 
-{$DOMAIN}: {
-    root * /static
+localhost: {
+    root * ./static
     file_server
     encode zstd gzip
 }
 
 # Python backend ws proxy
-{$DOMAIN}:9000 {
-    reverse_proxy :9090 {
+localhost:9000 {
+    reverse_proxy localhost:9090 {
     }
 }

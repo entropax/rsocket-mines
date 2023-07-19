@@ -15,7 +15,7 @@ from rsocket.routing.routing_request_handler import RoutingRequestHandler
 from rsocket.streams.stream_from_generator import StreamFromGenerator
 from rsocket.streams.stream_from_async_generator import StreamFromAsyncGenerator
 
-from backend.utils.storage import AppData, UserSessionData, SessionId
+from utils.storage import AppData, UserSessionData, SessionId
 from response_channel import response_stream_1, LoggingSubscriber
 from response_stream import response_stream_2
 from data_fixtures import large_data1
@@ -133,7 +133,7 @@ class CustomAppHandler:
                 return StreamFromAsyncGenerator(generator, delay_between_messages)
 
             logging.info('Got stream chat request')
-            return response_stream(delay_between_messages=timedelta(seconds=0.5))
+            return response_stream(delay_between_messages=timedelta(seconds=0.25))
 
         # @router.response('room.create')
         # async def create_room(payload: Payload) -> Awaitable[Payload]:

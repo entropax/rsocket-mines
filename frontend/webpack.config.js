@@ -28,7 +28,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.KEEPALIVE': JSON.stringify(process.env.KEEPALIVE || 60000),
       'process.env.LIFETIME': JSON.stringify(process.env.LIFETIME || 180000),
-      'process.env.URL': JSON.stringify(process.env.URL || 'ws://10.66.66.3:9000')
+      'process.env.URL': JSON.stringify(process.env.URL || 'wss://localhost:9000')
     }),
     new HtmlWebpackPlugin({
       template: "./index.html",

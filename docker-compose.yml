@@ -7,19 +7,23 @@ services:
       - static-files:/src/static
       # - ./frontend:/app/static
 
-  server:
+  app_server:
     build: ./backend
+    restart: unless-stopped
     # volumes:
       # - ./app:/app/backend
     expose:
       - "9090"
-    # ports:
-      # - "8080:9090"
-      # - "9090"
 
   caddy:
     image: caddy:latest
     restart: unless-stopped
+    environment:
+      - DOMAIN
+    depends_on:
+      - app_server
+    env_file:
+      - ./configs/default.env
     ports:
       - "80:80"
       - "443:443"
