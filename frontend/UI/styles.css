@@ -25,6 +25,7 @@ body {
     justify-content: space-between;
     transition: height 0.2s;
     transition: width 0.2s;
+    font-size: 14px;
 }
 
 .box {
@@ -32,7 +33,6 @@ body {
     margin: 4px;
     border-width: thick;
     display: flex;
-    justify-content: center;
     align-items: center;
     text-align: center;
 }
@@ -53,7 +53,7 @@ body {
 /*  */
 /* fonts */
 /*  */
-#welcome, #show-name, #show-stat, #login-hint{
+#welcome, #show-name, #show-stat, #login-hint, #success_login_output_p{
     color: #ffffff;
     text-decoration: none;
     margin: 0;
@@ -84,19 +84,6 @@ body {
     text-overflow: ellipsis;
 }
 
-#logoutButton {
-    font-size: 14pt;
-    flex: default;
-    white-space: nowrap;
-    overflow: hidden;
-    height: 28px;
-    width: 100px;
-    margin: none;
-    justify-content: center;
-    align-items: center;
-    line-height: 1;
-}
-
 #login-hint {
     font-weight: bold;
     margin-right: 8px;
@@ -115,19 +102,15 @@ body {
     height: 19dvh;
     background-color: blueviolet;
     display: flex;
-    justify-content: center;
     align-items: center;
     transition: height 0.2s;
-}
-
-#hair-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    justify-content: center;
+    margin: 4px;
 }
 
-#eye-div {
+
+#box-2 {
     flex-direction: row;   /* this make element to be aligned inside one sting */
     justify-content: space-between;
     align-items: center;
@@ -135,16 +118,43 @@ body {
     box-sizing: border-box;
     margin: 4px;
     flex-grow: 1;     /* this will make the element occupy all the space!!! */
+    display: none;
 }
 
+#socket_status {
+    flex-direction: row;   /* this make element to be aligned inside one sting */
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    box-sizing: border-box;
+    margin: 4px;
+    flex-grow: 1;     /* this will make the element occupy all the space!!! */
+    display: none;
+}
+
+#nose-div {
+    margin: 4px;
+    flex-grow: 1;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+#tooth-div {
+    margin: 4px;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
 
 /*  */
 /* mid */
 /*  */
-#box-2 {
+#box-9 {
     height: 79dvh;
     flex-direction: column;
     transition: height 0.2s;
+    justify-content: center;
 }
 
 #login-div-0 {
@@ -178,29 +188,35 @@ body {
 }
 
 /*  */
-/* bottom */
+/* bot */
 /*  */
-#box-3 {
+#chatContainer {
     height: 0dvh;
     display: flex;
     flex-direction: column;
     transition: height 0.2s;
 }
 
-#knee-div {
-    background-color: rgb(175, 114, 231);
-    flex-grow: 1;
+#chatBody {
+    background-color: rgb(215, 204, 255);
     margin: 4px;
 }
 
-#foot-div {
+#messageDiv {
+    margin: 4px;
+    flex-grow: 1;
     flex-direction: row;
     box-sizing: border-box;
-    margin: 4px;
 }
 
-#message-field {
+#messageFormSend {
     flex: 1 1 auto;
     min-width: 10dvw;
     padding-left: 10px;
 }
+#messageButtonSend {
+    flex: 0 0 auto;
+    min-width: 10dvw;
+    padding-left: 10px;
+}
+

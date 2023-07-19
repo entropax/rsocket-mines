@@ -10,84 +10,71 @@
 <body>
   <div class="container">
 
-    <div id="box-1" class="box">
-
-        <div id="hair-div" class="level-1">
-            <h1 id="welcome" class="level-1">Welcome to the world of tomorrow!</h1>
-        </div>
-
-        <div hidden id="eye-div" class="top level-2">
-            <p hidden id="show-name" class="top level-2"></p>
-            <p hidden id="show-stat" class="top level-2"></p>
-            <button hidden id="logoutButton" class="top level-2">Sing out</button>
-        </div>
-
-
+    <div id="box-1" class="box level-1">
+        <h1 id="welcome" class="level-1">Welcome to the world of RSocket!</h1>
     </div>
 
+    <div hidden id="box-2" class="box level-2">
+        <p hidden id="show-name" class="level-2"></p>
+        <button hidden id="logoutButton" class="btn btn-danger level-2">
+            Sing out
+        </button>  
+    </div>
 
+    <div hidden id="socket_status" class="box level-2">
+        <p hidden id="show-stat" class="level-2">socket status text </p>
+        <p hidden id="success_login_output_p" class="level-2">another msg for</p>
+    </div>
 
-
-
+        <!-- <div hidden class="level-2">
+            <form hidden class="level-2">
+                <input hidden class="level-2">
+                <input hidden class="level-2">
+            </form>
+            <div hidden class="level-2">
+                <p hidden class="level-2"></p>
+            </div>
+        </div> -->
 
 
     
 
-    <div id="box-2" class="box">
+    <div id="box-9" class="box level-1">
 
         <div id="login-div-0" class="level-1">
             <form id="loginForm" class="level-1">
-
                 <input type="text" name="username" placeholder="Login" id="usernameInput" class="level-1">
                 <input type="password" name="password"  placeholder="Password" id="passwordInput" class="level-1">
-                <input type="submit" value="Sign in / up" id="login-btn" class="level-1">
+                <input type="submit" value="Sign in / up" id="login-btn" class="btn btn-primary level-1">         
                 <div id="login_output" class="level-1">
-                    <p class="level-1"></p>
+                    <p id="login_outup_p" class="level-1"></p>
                 </div>
-
             </form>
         </div>
 
         <div id="login-div-1" class="level-1">
-            <p id="login-hint" class="level-1"></p>
-        </div>
-
-        <div hidden id="create-room-div" class="level-2">
-            <input type="text" placeholder="Room name" id="room-name-input" class="level-2">
-            <button id="room-name-btn" class="level-2">Create room</button>
-        </div>
-
-        <div hidden id="join-rooms" class="level-2">
-
-        </div>
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-    <div hidden id="box-3" class="bottom level-2">
-
-        <div hidden id="knee-div" class="bottom level-2">
-        </div>
-
-        <div hidden id="foot-div" class="bottom level-2">
-            <input hidden type="input" id="message-field" class="bottom level-2" placeholder="Message">
-            <button hidden id="chat-btn" class="bottom level-2"> Send </button>
+            <p id="login-hint" class="level-1">error login info</p>
         </div>
 
     </div>
 
-  </div>
+
+
+
+    <div hidden id="chatContainer" class="level-2">
+
+        <div hidden id="chatBody" class="p-3 bg-white border level-2">
+        </div>
+        <div id="messageDiv">
+            <input hidden type="input" id="messageFormSend" class="form-control level-2" placeholder="Message">
+            <button hidden id="messageButtonSend" class="level-2 btn btn-primary">
+                Send
+            </button>
+        </div>
+
+    </div>
+
   <script src="services/visibility.js"></script>
-  <script src="services/mid.js"></script>
   <script src="services/resize.js"></script>
   <script src="services/wrong_pwd_handler.js"></script>
   <script src="main.js"></script>

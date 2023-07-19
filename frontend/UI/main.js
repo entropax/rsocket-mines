@@ -12,12 +12,10 @@ login_btn.addEventListener('click', function(event) {
     var randomNum = Math.random();
     var randomBool = randomNum < 0.5;
 
-        if (randomBool) {
+        if (true) {
 
-            resize_level_2();
             render_level_2(name);
-
-            render_level_2_mid();
+            resize_level_2();
             
         } else {
             handle_wrong_credentials();
@@ -26,6 +24,8 @@ login_btn.addEventListener('click', function(event) {
 
 
 logout_btn.addEventListener('click', function() {
-        resize_level_1();
+
         render_level_1();
+        resize_level_1();
+
     })
