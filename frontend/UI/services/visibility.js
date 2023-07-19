@@ -10,13 +10,17 @@ function render_level_1() {
             'box-1': 'flex',
             'welcome': 'flex',
 
+            'head_div': 'none',
             'box-2': 'none',
             'show-name': 'none',
             'logoutButton': 'none',
-
             'socket_status': 'none',
-            'show-stat': 'none',
             'success_login_output_p': 'none',
+            'box-3': 'none',
+            'messageForm': 'none',
+            'messageInput': 'none',
+            'message_output': 'none',
+
 
             // mid
             'box-9': 'flex',
@@ -30,7 +34,7 @@ function render_level_1() {
             'login_outup_p': 'block',
 
             // bot
-            'knee-div': 'none',
+            'chatContainer': 'none',
             'chatBody': 'none',
             'messageDiv': 'none',
             'messageFormSend': 'none',
@@ -54,14 +58,17 @@ function render_level_2(name) {
             'box-1': 'none',
             'welcome': 'none',
 
+            'head_div': 'block',
             'box-2': 'flex',
             'show-name': 'flex',
             'logoutButton': 'block',
 
             'socket_status': 'flex',
-            'show-stat': 'flex',
             'success_login_output_p': 'flex',
-
+            'box-3': 'flex',
+            'messageForm': 'flex',
+            'messageInput': 'flex',
+            'message_output': 'flex',
 
             // mid
             'box-9': 'none',
@@ -75,10 +82,10 @@ function render_level_2(name) {
             'login_outup_p': 'block',
 
             // bot
-            'knee-div': 'block',
+            'chatContainer': 'flex',
             'chatBody': 'flex',
             'messageDiv': 'flex',
-            'messageFormSend': 'block',
+            'messageFormSend': 'flex',
             'messageButtonSend': 'block',
         }
     );

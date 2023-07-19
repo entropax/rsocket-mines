@@ -14,28 +14,29 @@
         <h1 id="welcome" class="level-1">Welcome to the world of RSocket!</h1>
     </div>
 
-    <div hidden id="box-2" class="box level-2">
-        <p hidden id="show-name" class="level-2"></p>
-        <button hidden id="logoutButton" class="btn btn-danger level-2">
-            Sing out
-        </button>  
-    </div>
+    <div hidden id="head_div" class="level-2">
 
-    <div hidden id="socket_status" class="box level-2">
-        <p hidden id="show-stat" class="level-2">socket status text </p>
-        <p hidden id="success_login_output_p" class="level-2">another msg for</p>
-    </div>
+        <div hidden id="box-2" class="box level-2">
+            <p hidden id="show-name" class="level-2"></p>
+            <button hidden id="logoutButton" class="btn btn-primary level-2">
+                Sing out
+            </button>  
+        </div>
 
-        <!-- <div hidden class="level-2">
-            <form hidden class="level-2">
-                <input hidden class="level-2">
-                <input hidden class="level-2">
-            </form>
-            <div hidden class="level-2">
-                <p hidden class="level-2"></p>
+        <div hidden id="socket_status" class="box level-2">
+            <p hidden id="success_login_output_p" class="level-2">socket sgfhfghhgf hfghfghfg fghfg ghfh fgtadfggdfdfg dfggfdgdf dfgdfggfd tus text </p>
+        </div>
+
+            <div hidden id="box-3" class="level-2">
+                <form hidden id="messageForm" class="level-2">
+                    <input hidden type="text" name="messageInput" id="messageInput" placeholder="Message yourself" class="level-2">
+                    <input hidden type="submit" value="Submit" class="level-2">
+                </form>
+                <div hidden id="message_output" class="level-2">
+                    <p id="message_output_p" hidden class="level-2">fsdfds</p>
+                </div>
             </div>
-        </div> -->
-
+    </div>
 
     
 
@@ -65,9 +66,9 @@
 
         <div hidden id="chatBody" class="p-3 bg-white border level-2">
         </div>
-        <div id="messageDiv">
+        <div hidden id="messageDiv" class="level-2">
             <input hidden type="input" id="messageFormSend" class="form-control level-2" placeholder="Message">
-            <button hidden id="messageButtonSend" class="level-2 btn btn-primary">
+            <button hidden id="messageButtonSend" class="level-2 btn btn-success">
                 Send
             </button>
         </div>

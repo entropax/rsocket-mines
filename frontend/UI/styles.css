@@ -15,6 +15,10 @@ body {
     transition: width 0.2s;
 }
 
+body, html {
+    overflow: hidden;
+}
+
 .container {
     height: 98dvh;
     width: 99dvw;
@@ -53,7 +57,7 @@ body {
 /*  */
 /* fonts */
 /*  */
-#welcome, #show-name, #show-stat, #login-hint, #success_login_output_p{
+#welcome, #show-name, #login-hint, #success_login_output_p{
     color: #ffffff;
     text-decoration: none;
     margin: 0;
@@ -68,20 +72,20 @@ body {
     font-family: 'Lobster', cursive;
     font-size: 20pt;
     flex: 0 1 45%;
-    padding-left: 10px;
+    padding-left: 16px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-#show-stat {
-    font-size: 14pt;
+#success_login_output_p {
     flex: 1 1 45%;
     padding-left: 10px;
+    padding-right: 10px;
     font-weight: bold;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: left;
 }
 
 #login-hint {
@@ -119,6 +123,11 @@ body {
     margin: 4px;
     flex-grow: 1;     /* this will make the element occupy all the space!!! */
     display: none;
+}
+
+#box-3 {
+    margin: 4px;
+    flex-direction: column;
 }
 
 #socket_status {
@@ -200,11 +209,11 @@ body {
 #chatBody {
     background-color: rgb(215, 204, 255);
     margin: 4px;
+    flex-grow: 1;
 }
 
 #messageDiv {
     margin: 4px;
-    flex-grow: 1;
     flex-direction: row;
     box-sizing: border-box;
 }
@@ -214,9 +223,24 @@ body {
     min-width: 10dvw;
     padding-left: 10px;
 }
-#messageButtonSend {
-    flex: 0 0 auto;
-    min-width: 10dvw;
-    padding-left: 10px;
+
+#messageForm {
+    justify-content: space-between;
 }
 
+#messageInput {
+    flex: 1;
+
+}
+
+#message_output {
+    background-color: rgb(215, 204, 255);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#message_output_p {
+    margin: 0 0 0px;
+    color: #39378a;
+    font-weight: bold;
+}
