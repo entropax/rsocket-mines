@@ -30,6 +30,7 @@ dev-run-caddy: dev-frontend-build
 
 dev-frontend-build:
 	@echo "start front building"
+	mkdir -p static/js
 	cd frontend && npm run build && cp dist/bundle.js ../static/js/app.js
 	cd frontend && cp index.html ../static/
 	cd frontend && cp ./dist/bundle.js.map ../static/js

@@ -1,4 +1,4 @@
-function resize_level_1() {
+export function resize_level_1() {
     // top
     var box1 = document.getElementById('box-1');
     box1.style.height = '19dvh';
@@ -23,7 +23,7 @@ function resize_level_1() {
 }
 
 
-function resize_level_2() {
+export function resize_level_2() {
 
     // top
     var box1 = document.getElementById('box-1');

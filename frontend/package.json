@@ -21,7 +21,7 @@
     "rsocket-composite-metadata": "^1.0.0-alpha.3",
     "rsocket-core": "^1.0.0-alpha.3",
     "rsocket-websocket-client": "^1.0.0-alpha.3",
-    "webpack": "^5.88.1",
+    "webpack": "^5.88.2",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.0"
   },

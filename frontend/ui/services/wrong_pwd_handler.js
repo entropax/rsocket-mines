@@ -1,4 +1,4 @@
-function handle_wrong_credentials() {
+export function shake_text_animation() {
     var login_hint = document.getElementById('login_outup_p');
 
     // Максим здесь будет ошибки, что возвращает нажатие кнопки логин

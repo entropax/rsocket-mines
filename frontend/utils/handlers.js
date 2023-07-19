@@ -3,7 +3,12 @@ import { requestResponse } from "./requestResponse.js";
 import { requestStream } from "./requestStream.js";
 import { requestFnf } from "./requestFnf.js";
 
+// cosmetic
+import {resize_level_1, resize_level_2} from "../ui/services/resize.js";
+import {render_level_1, render_level_2} from "../ui/services/visibility.js";
+
 import { Logger } from "./logger.js";
+
 
 export const handleLoginFormSubmit = async (event, rsocket) => {
   event.preventDefault();
@@ -26,6 +31,9 @@ export const handleLoginFormSubmit = async (event, rsocket) => {
     sessionStorage.setItem('user', user);
     sessionStorage.setItem('pass', pass);
 
+    resize_level_2();
+    render_level_2(user);
+
     await requestStream(rsocket, 'chat.messages', user, pass)
         .then(result => {
             console.log("Result of requestStream: ", result);
@@ -46,6 +54,9 @@ export const handleLogoutFormSubmit = async (event, rsocket) => {
   // let jsonData = JSON.parse(stringData);
   // let status = jsonData.status;
   let status = new TextDecoder().decode(response.data);
+
+  resize_level_1();
+  render_level_1();
 
   if(status === 'success') {
     // сохранение значения в сессионном хранилище

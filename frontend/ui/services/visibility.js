@@ -1,4 +1,4 @@
-function render_level_1() {
+export function render_level_1() {
     __clear_input_by_id('messageFormSend');
 
     __hide_elements_by_classname('level-2');
@@ -45,7 +45,7 @@ function render_level_1() {
 }
 
 
-function render_level_2(name) {
+export function render_level_2(name) {
     __clear_input_by_id('usernameInput');
     __clear_input_by_id('passwordInput');
 
