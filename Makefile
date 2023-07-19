@@ -26,7 +26,7 @@ dev-run-server:
 
 dev-run-caddy: dev-frontend-build
 	@echo "static server with proxy (Caddy2) run"
-	sudo caddy run --config configs/Caddyfile
+	sudo caddy run --config configs/Caddyfile.dev
 
 dev-frontend-build:
 	@echo "start front building"

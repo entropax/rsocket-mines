@@ -1,6 +1,7 @@
-const path = require("path");
 const webpack = require("webpack");
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: "./app.js",
@@ -23,6 +24,12 @@ module.exports = {
     },
   },
   plugins: [
+    new Dotenv(),
+    new webpack.DefinePlugin({
+      'process.env.KEEPALIVE': JSON.stringify(process.env.KEEPALIVE || 60000),
+      'process.env.LIFETIME': JSON.stringify(process.env.LIFETIME || 180000),
+      'process.env.URL': JSON.stringify(process.env.URL || 'wss://localhost:9000')
+    }),
     new HtmlWebpackPlugin({
       template: "./index.html",
     }),
@@ -30,4 +37,11 @@ module.exports = {
       Buffer: ["buffer", "Buffer"],
     }),
   ],
-};
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      }],
+  },
+}

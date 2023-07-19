@@ -21,13 +21,17 @@
     "rsocket-composite-metadata": "^1.0.0-alpha.3",
     "rsocket-core": "^1.0.0-alpha.3",
     "rsocket-websocket-client": "^1.0.0-alpha.3",
-    "webpack": "^5.74.0",
+    "webpack": "^5.88.1",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.0"
   },
   "dependencies": {
+    "bootstrap": "^5.3.0",
+    "css-loader": "^6.8.1",
+    "dotenv-webpack": "^8.0.1",
     "html-webpack-plugin": "^5.5.0",
     "rsocket-flowable": "^0.0.27",
+    "style-loader": "^3.3.3",
     "ts-loader": "^9.4.4",
     "typescript": "^5.1.6"
   }
