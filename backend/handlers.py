@@ -67,15 +67,13 @@ class CustomAppHandler:
                         for _username, _password in app_data.sessions.items():
                             if _username == username and _password == password:
                                 session_id = SessionId(uuid.uuid4())
-                                self._session = UserSessionData(username, password, session_id, [])
-                                app_data.sessions[username] = password
-                                app_data.user_session_by_id[session_id] = self._session
+                                self._session.session_id = session_id
                                 app_data.user_session_by_id[session_id] = self._session
                                 response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
                                 return create_future(Payload(response))
-                            else:
-                                response = f'{{"message": "Wrong password", "status": false}}'.encode()
-                                return create_future(Payload(response))
+                        if username in app_data.sessions:
+                            response = f'{{"message": "Wrong password", "status": false}}'.encode()
+                            return create_future(Payload(response))
 
                     except TypeError:
                         pass
@@ -83,7 +81,6 @@ class CustomAppHandler:
                     session_id = SessionId(uuid.uuid4())
                     self._session = UserSessionData(username, password, session_id, [])
                     app_data.sessions[username] = password
-                    app_data.user_session_by_id[session_id] = self._session
                     app_data.user_session_by_id[session_id] = self._session
                     response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
                     return create_future(Payload(response))

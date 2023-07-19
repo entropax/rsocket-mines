@@ -11,7 +11,7 @@ localhost: {
 }
 
 # Python backend ws proxy
-:9000 {
+localhost:9000 {
     reverse_proxy :9090 {
     }
 }
