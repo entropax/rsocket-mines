@@ -116,11 +116,11 @@ class CustomAppHandler:
             # кладем всем юзерам
             for session_data in app_data.user_session_by_id.values():
                 session_data.new_messages.append([username, message['message'], message['time']])
-                if len(app_data.last_messages) > 10:
-                    app_data.last_messages.pop(0)
-                    app_data.last_messages.append([username, message['message'], message['time']])
-                else:
-                    app_data.last_messages.append([username, message['message'], message['time']])
+            if len(app_data.last_messages) > 10:
+                app_data.last_messages.pop(0)
+                app_data.last_messages.append([username, message['message'], message['time']])
+            else:
+                app_data.last_messages.append([username, message['message'], message['time']])
 
             # storage.last_fire_and_forget = payload.data
             logging.info('No response sent to client')
@@ -148,7 +148,7 @@ class CustomAppHandler:
                     while True:
                         try:
                             if not app_data.user_session_by_id[user_id].new_messages:
-                                await asyncio.sleep(0.2)
+                                await asyncio.sleep(0.1)
                                 # yield Payload('Empty'.encode('utf-8'), b'metadata'), is_complete
                         except KeyError:
                             await asyncio.sleep(0.2)

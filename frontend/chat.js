@@ -9,13 +9,13 @@ export function addChat() {
     const chatHeader = document.createElement('div');
     chatHeader.className = 'd-flex justify-content-between align-items-center p-3 bg-light';
 
-    const joinButton = document.createElement('button');
-    joinButton.className = 'btn btn-success';
-    joinButton.innerText = 'Join';
-
-    const closeButton = document.createElement('button');
-    closeButton.className = 'btn btn-danger';
-    closeButton.innerText = 'Close';
+//    const joinButton = document.createElement('button');
+//    joinButton.className = 'btn btn-success';
+//    joinButton.innerText = 'Join';
+//
+//    const closeButton = document.createElement('button');
+//    closeButton.className = 'btn btn-danger';
+//    closeButton.innerText = 'Close';
 
     chatHeader.appendChild(joinButton);
     chatHeader.appendChild(closeButton);
