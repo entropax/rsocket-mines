@@ -17,8 +17,8 @@ export function addChat() {
 //    closeButton.className = 'btn btn-danger';
 //    closeButton.innerText = 'Close';
 
-    chatHeader.appendChild(joinButton);
-    chatHeader.appendChild(closeButton);
+//    chatHeader.appendChild(joinButton);
+//    chatHeader.appendChild(closeButton);
 
     // Создаем и настраиваем область чата
     const chatBody = document.createElement('div');

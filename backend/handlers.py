@@ -53,48 +53,90 @@ class CustomAppHandler:
         @router.response('login')
         async def login(payload: Payload) -> Awaitable[Payload]:
             if payload.data:
+                print('have data')
+                print(self._session)
+                print(app_data.sessions.items())
                 data = json.loads(utf8_decode(payload.data))
                 username = data.get('username')
                 password = data.get('password')
+                if username is None or password is None:
+                    response = '{"message": "You not specify login with pass", "status": "error"}'.encode()
+                    return create_future(Payload(response))
+
 
                 if self._session is not None:
                     if self._session.session_id is not None:
                         response = f'{{"message": "You are already logged in!", "status": error}}'.encode()
                         return create_future(Payload(response))
 
-                if username and password:
-                    try:
+                    else:
                         for _username, _password in app_data.sessions.items():
                             if _username == username and _password == password:
                                 session_id = SessionId(uuid.uuid4())
                                 self._session.session_id = session_id
+                                response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
+                                return create_future(Payload(response))
+                            else:
+                                response = f'{{"message": "Wrong password", "status": false}}'.encode()
+                                return create_future(Payload(response))
+                else:
+                    if len(app_data.sessions.items()) > 0:
+                        for _username, _password in app_data.sessions.items():
+                            if _username == username:
+                                if  _password == password:
+                                    session_id = SessionId(uuid.uuid4())
+                                    self._session = UserSessionData(username, password, session_id, [])
+                                    app_data.sessions[username] = password
+                                    app_data.user_session_by_id[session_id] = self._session
+                                    response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
+                                    return create_future(Payload(response))
+                                else:
+                                    response = f'{{"message": "Wrong password", "status": false}}'.encode()
+                                    return create_future(Payload(response))
+                            else:
+                                session_id = SessionId(uuid.uuid4())
+                                self._session = UserSessionData(username, password, session_id, [])
+                                app_data.sessions[username] = password
                                 app_data.user_session_by_id[session_id] = self._session
                                 response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
                                 return create_future(Payload(response))
-                        if username in app_data.sessions:
-                            response = f'{{"message": "Wrong password", "status": false}}'.encode()
-                            return create_future(Payload(response))
+                    else:
+                        session_id = SessionId(uuid.uuid4())
+                        self._session = UserSessionData(username, password, session_id, [])
+                        app_data.sessions[username] = password
+                        app_data.user_session_by_id[session_id] = self._session
+                        response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
+                        return create_future(Payload(response))
 
-                    except TypeError:
-                        pass
-                    logging.info('RUN LOGIN')
-                    session_id = SessionId(uuid.uuid4())
-                    self._session = UserSessionData(username, password, session_id, [])
-                    app_data.sessions[username] = password
-                    app_data.user_session_by_id[session_id] = self._session
-                    response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
-                    return create_future(Payload(response))
-                else:
-                    response = '{"message": "You not specify login with pass", "status": "error"}'.encode()
-                    return create_future(Payload(response))
-
-            response = '{"message": "You not specify login with pass", "status": "error"}'.encode()
-            return create_future(Payload(response))
+                #     for _username, _password in app_data.sessions.items():
+                #         if _username == username and _password == password:
+                #             session_id = SessionId(uuid.uuid4())
+                #             self._session.session_id = session_id
+                #             app_data.user_session_by_id[session_id] = self._session
+                #             response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
+                #             return create_future(Payload(response))
+                #     if username in app_data.sessions:
+                #         response = f'{{"message": "Wrong password", "status": false}}'.encode()
+                #         return create_future(Payload(response))
+                # except TypeError:
+                #     pass
+                #
+                #     logging.info('RUN LOGIN')
+                #     session_id = SessionId(uuid.uuid4())
+                #     self._session = UserSessionData(username, password, session_id, [])
+                #     app_data.sessions[username] = password
+                #     app_data.user_session_by_id[session_id] = self._session
+                #     response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
+                #     return create_future(Payload(response))
+            else:
+                response = '{"message": "You not specify login with pass", "status": "error"}'.encode()
+                return create_future(Payload(response))
 
         @router.response('logout')
         async def logout(payload: Payload) -> Awaitable[Payload]:
             try:
-                self._session.session_id = None
+                # self._session.session_id = None
+                self._session = None
                 return create_response(ensure_bytes('success'))
 
             except Exception as e:
@@ -109,21 +151,24 @@ class CustomAppHandler:
 
         @router.fire_and_forget('fnf')
         async def get_fnf_message(payload: Payload, composite_metadata):
-            logging.info('Got single message from: user')
-            message = json.loads(utf8_decode(payload.data))
-            user_id = self._session.session_id
-            username = app_data.user_session_by_id[user_id].username
-            # кладем всем юзерам
-            for session_data in app_data.user_session_by_id.values():
-                session_data.new_messages.append([username, message['message'], message['time']])
-            if len(app_data.last_messages) > 10:
-                app_data.last_messages.pop(0)
-                app_data.last_messages.append([username, message['message'], message['time']])
-            else:
-                app_data.last_messages.append([username, message['message'], message['time']])
+            if utf8_decode(payload.data):
+                logging.info('Got single message from: user')
+                message = json.loads(utf8_decode(payload.data))
+                user_id = self._session.session_id
+                print(user_id)
+                # username = app_data.user_session_by_id[user_id].username
+                username = self._session.username
+                # кладем всем юзерам
+                for session_data in app_data.user_session_by_id.values():
+                    session_data.new_messages.append([username, message['message'], message['time']])
+                if len(app_data.last_messages) > 10:
+                    app_data.last_messages.pop(0)
+                    app_data.last_messages.append([username, message['message'], message['time']])
+                else:
+                    app_data.last_messages.append([username, message['message'], message['time']])
 
-            # storage.last_fire_and_forget = payload.data
-            logging.info('No response sent to client')
+                # storage.last_fire_and_forget = payload.data
+                logging.info('No response sent to client')
 
         @router.stream('chat.messages')
         async def stream_chat(**kwargs):

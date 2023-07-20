@@ -53,7 +53,11 @@ export const handleLogoutFormSubmit = async (event, rsocket) => {
     sessionStorage.setItem('pass', undefined);
     // sessionStorage.removeItem('user');
     // sessionStorage.removeItem('pass');
-    document.querySelector('#message').innerText = "User has logged out";
+    let msg = "You have been logged out and the socket connection has been closed. Please refresh the page."
+    document.querySelector('#message').innerText = msg;
+    rsocket.close()
+    const socketStatus = document.querySelector('#socket_status p');
+    socketStatus.innerText = "Rsocket closed by logged out: " + URL;
   }
 };
 
@@ -75,6 +79,8 @@ export const handleChatMessageSend = async (event, rsocket) => {
   let user = sessionStorage.getItem('user');
   let pass = sessionStorage.getItem('pass');
   let messageInput = document.getElementById('messageFormSend').value;
-  let payload = JSON.stringify({"message": messageInput, "time": formattedDate})
-  await requestFnf(rsocket, 'fnf', payload, user, pass);
+  document.getElementById('messageFormSend').value = ''
+  if (messageInput != '') {
+      let payload = JSON.stringify({"message": messageInput, "time": formattedDate})
+      await requestFnf(rsocket, 'fnf', payload, user, pass);}
 }
