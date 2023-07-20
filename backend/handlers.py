@@ -140,10 +140,10 @@ class CustomAppHandler:
                             message = msg[1]
                             time = msg[2]
                             date_object = datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ")
-                            formatted_time = date_object.strftime("%M:%S.%f")[:-3]
-                            formatted_time_send = now.strftime("%M:%S.%f")[:-3]
-                            message = f'{user} say: {message}\
-                            ((send:{formatted_time} || receive{formatted_time_send}))'
+                            formatted_time = date_object.strftime("%d/%m %H:%M:%S.%f")[:-3]
+                            formatted_time_send = now.strftime("%d/%m %H:%M:%S.%f")[:-3]
+                            message = f'{user}: {message}    \
+                            ((send_at:{formatted_time}|| receive_at:{formatted_time_send}))'
                             yield Payload(message.encode('utf-8'), b'metadata'), is_complete
                     while True:
                         try:
@@ -161,11 +161,11 @@ class CustomAppHandler:
                                     message = data[1]
                                     time = data[2]
                                     date_object = datetime.strptime(time, "%Y-%m-%dT%H:%M:%S.%fZ")
-                                    formatted_time = date_object.strftime("%M:%S.%f")[:-3]
-                                    formatted_time_send = now.strftime("%M:%S.%f")[:-3]
+                                    formatted_time = date_object.strftime("%d/%m %H:%M:%S.%f")[:-3]
+                                    formatted_time_send = now.strftime("%d/%m %H:%M:%S.%f")[:-3]
                                     # message = app_data.user_session_by_id[user_id].new_messages.pop(0)  # извлекаем первое сообщение и удаляем его из списка
-                                    message = f'{user} say: {message}\
-                                        ((send:{formatted_time} || receive{formatted_time_send}))'
+                                    message = f'{user}: {message}\
+                                        ((send_at:{formatted_time} || receive_at:{formatted_time_send}))'
                                     yield Payload(message.encode('utf-8'), b'metadata'), is_complete
                             except KeyError:
                                 await asyncio.sleep(0.2)

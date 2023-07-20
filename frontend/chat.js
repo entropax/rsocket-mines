@@ -23,7 +23,7 @@ export function addChat() {
     // Создаем и настраиваем область чата
     const chatBody = document.createElement('div');
     chatBody.className = 'p-3 bg-white border';
-    chatBody.style.height = '300px';
+    chatBody.style.height = '480px';
     chatBody.style.overflowY = 'auto';
     chatBody.id = 'chatBody'
 
