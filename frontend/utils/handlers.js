@@ -4,8 +4,9 @@ import { requestStream } from "./requestStream.js";
 import { requestFnf } from "./requestFnf.js";
 
 // cosmetic
-import {resize_level_1, resize_level_2} from "../ui/services/resize.js";
-import {render_level_1, render_level_2} from "../ui/services/visibility.js";
+import { resize_level_1, resize_level_2 } from "../ui/services/resize.js";
+import { render_level_1, render_level_2 } from "../ui/services/visibility.js";
+import { shake_text_animation } from "../ui/services/wrong_pwd_handler.js"
 
 import { Logger } from "./logger.js";
 
@@ -41,6 +42,9 @@ export const handleLoginFormSubmit = async (event, rsocket) => {
         .catch(error => {
             console.error("Error from requestStream: ", error);
         });
+  }
+  else {
+    shake_text_animation();
   }
 };
 

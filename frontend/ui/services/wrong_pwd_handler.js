@@ -2,7 +2,7 @@ export function shake_text_animation() {
     var login_hint = document.getElementById('login_outup_p');
 
     // Максим здесь будет ошибки, что возвращает нажатие кнопки логин
-    login_hint.textContent = `some error text...`;
+    login_hint.textContent = `* wrong/empty credentials`;
 
     document.getElementById('login-btn').addEventListener('click', function() {
         

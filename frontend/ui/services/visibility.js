@@ -19,6 +19,7 @@ export function render_level_1() {
             'box-3': 'none',
             'messageForm': 'none',
             'messageInput': 'none',
+            'subit_message_form': 'none',
             'message_output': 'none',
 
 
@@ -68,6 +69,7 @@ export function render_level_2(name) {
             'box-3': 'flex',
             'messageForm': 'flex',
             'messageInput': 'flex',
+            'subit_message_form': 'block',
             'message_output': 'flex',
 
             // mid
