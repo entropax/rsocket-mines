@@ -70,8 +70,8 @@ class CustomAppHandler:
                         return create_future(Payload(response))
 
                     else:
-                        for _username, _password in app_data.sessions.items():
-                            if _username == username and _password == password:
+                        if username in app_data.sessions:
+                            if app_data.sessions[username] == password:
                                 session_id = SessionId(uuid.uuid4())
                                 self._session.session_id = session_id
                                 response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
@@ -79,27 +79,29 @@ class CustomAppHandler:
                             else:
                                 response = f'{{"message": "Wrong password", "status": false}}'.encode()
                                 return create_future(Payload(response))
+                        else:
+                            response = f'{{"message": "Wrong password", "status": false}}'.encode()
+                            return create_future(Payload(response))
                 else:
-                    if len(app_data.sessions.items()) > 0:
-                        for _username, _password in app_data.sessions.items():
-                            if _username == username:
-                                if  _password == password:
-                                    session_id = SessionId(uuid.uuid4())
-                                    self._session = UserSessionData(username, password, session_id, [])
-                                    app_data.sessions[username] = password
-                                    app_data.user_session_by_id[session_id] = self._session
-                                    response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
-                                    return create_future(Payload(response))
-                                else:
-                                    response = f'{{"message": "Wrong password", "status": false}}'.encode()
-                                    return create_future(Payload(response))
-                            else:
+                    if app_data.sessions.items():
+                        if username in app_data.sessions:
+                            if app_data.sessions[username] == password:
                                 session_id = SessionId(uuid.uuid4())
                                 self._session = UserSessionData(username, password, session_id, [])
                                 app_data.sessions[username] = password
                                 app_data.user_session_by_id[session_id] = self._session
                                 response = f'{{"message": "Welcome to chat, {session_id=}", "status": true}}'.encode()
                                 return create_future(Payload(response))
+                            else:
+                                response = f'{{"message": "Wrong password", "status": false}}'.encode()
+                                return create_future(Payload(response))
+                        else:
+                            session_id = SessionId(uuid.uuid4())
+                            self._session = UserSessionData(username, password, session_id, [])
+                            app_data.sessions[username] = password
+                            app_data.user_session_by_id[session_id] = self._session
+                            response = f'{{"message": "2Welcome to chat, {session_id=}", "status": true}}'.encode()
+                            return create_future(Payload(response))
                     else:
                         session_id = SessionId(uuid.uuid4())
                         self._session = UserSessionData(username, password, session_id, [])
