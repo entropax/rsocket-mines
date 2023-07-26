@@ -1,6 +1,6 @@
 {
-    debug
-    admin   off
+    {$CADDY_DEBUG}
+    admin   {$CADDY_ADMIN}
 }
 
 
@@ -8,10 +8,25 @@
     root * /static
     file_server
     encode zstd gzip
+    log {
+       level DEBUG
+       output file /data/log/caddy_test.log {
+           roll_size 10MiB
+           roll_keep 10
+           roll_keep_for 336h
+       }
+    }
 }
 
-# Python backend ws proxy
+# Websocket proxy to python backend
 {$DOMAIN}:9000 {
     reverse_proxy :9090 {
     }
+    log {
+       level DEBUG
+       output file /data/log/caddy_test.log {
+           roll_size 10MiB
+           roll_keep 10
+           roll_keep_for 336h
+       }
 }
