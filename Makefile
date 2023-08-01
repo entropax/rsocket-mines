@@ -24,9 +24,14 @@ help:
 	@echo -e '------------------------------------------------------------'
 	@echo
 
-dev-docker:
+dev-run-docker:
 	@echo "run locally all services with docker"
-	@docker-compose up
+	@docker-compose up -d && \
+	caddy trust --address localhost:2222 && \
+	curl \
+        -H "Content-Type: application/json" -d 'true' \
+		"http://localhost:2222/config/admin/disabled" && \
+	docker-compose logs -f
 
 dev-stop:  # TODO make more proper
 	sudo killall caddy
@@ -42,9 +47,18 @@ dev-run-backend:
 dev-run-caddy: frontend-build
 	@echo "Static server with proxy (Caddy2) run"
 	#sudo caddy run --envfile configs/default.env --config configs/Caddyfile &
-	export STATIC_FOLDER=./static && \
-	export BACKEND=localhost && \
-		sudo -E caddy start --config configs/Caddyfile
+	export STATIC_FOLDER="./static" && \
+	export CADDY_ADMIN="admin localhost:2222" && \
+	export BACKEND="localhost" && \
+		sudo -E caddy start --config configs/Caddyfile &&\
+		caddy trust --address localhost:2222
+
+
+prod-run:
+	@echo NOT IMPLEMENTED YET
+
+prod-run-docker:
+	@echo NOT IMPLEMENTED YET
 
 frontend-build:
 	@echo "start front building"
