@@ -1,11 +1,19 @@
 version: '3.7'
 
+networks:
+    web:
+        external: true
+    internal:
+        external: false
+        driver: bridge
+
 services:
   frontend:
     build: ./frontend
+    env_file:
+      - ./configs/default.env
     volumes:
       - static-files:/src/static
-      # - ./frontend:/app/static
 
   app_server:
     build: ./backend
@@ -18,21 +26,23 @@ services:
   caddy:
     image: caddy:latest
     restart: unless-stopped
-    environment:
-      - DOMAIN
-    depends_on:
-      - app_server
     env_file:
       - ./configs/default.env
+    depends_on:
+      - app_server
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+      - "8000:8000"
       - "9000:9000"
     volumes:
       - ./configs/Caddyfile:/etc/caddy/Caddyfile
       - ./configs/cert:/etc/caddy/cert
+      # - ./configs/localcert:/data/caddy/
       - static-files:/static
+    # network:
+    #   - web
+    #   - internal
 
 volumes:
   static-files:
