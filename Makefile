@@ -15,6 +15,7 @@ help:
 	@echo -e '------------------------------------------------------------'
 	$(call colored_msg,"dev-run\\t\\t\|","Run caddy with backend locally")
 	$(call colored_msg,"dev-run-docker\\t\|","Run locally with docker")
+	$(call colored_msg,"dev-stop\\t\\t\|","Stop Caddy service system wide")
 	@echo -e '------------------------------------------------------------'
 	$(call colored_msg,"prod-run\\t\\t\|","Run production like system wide")
 	$(call colored_msg,"prod-run-docker\\t\|","Run production with docker")
