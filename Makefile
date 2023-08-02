@@ -15,7 +15,7 @@ help:
 	@echo -e '------------------------------------------------------------'
 	$(call colored_msg,"dev-run\\t\\t\|","Run caddy with backend locally")
 	$(call colored_msg,"dev-run-docker\\t\|","Run locally with docker")
-	$(call colored_msg,"dev-stop\\t\\t\|","Stop Caddy service system wide")
+	$(call colored_msg,"dev-stop\\t\\t\|","Stop ALL include docker")
 	@echo -e '------------------------------------------------------------'
 	$(call colored_msg,"prod-run\\t\\t\|","Run production like system wide")
 	$(call colored_msg,"prod-run-docker\\t\|","Run production with docker")
@@ -26,7 +26,7 @@ help:
 
 dev-run-docker:
 	@echo "run locally all services with docker"
-	@docker-compose up -d && \
+	docker-compose up -d && \
 	caddy trust --address localhost:2222 && \
 	curl \
         -H "Content-Type: application/json" -d 'true' \
@@ -35,6 +35,7 @@ dev-run-docker:
 
 dev-stop:  # TODO make more proper
 	sudo killall caddy
+	docker-compose down
 
 dev-run: dev-run-caddy dev-run-backend
 	@echo "run locally all services without docker"

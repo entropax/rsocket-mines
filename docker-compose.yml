@@ -1,11 +1,11 @@
 version: '3.7'
 
-networks:
-    web:
-        external: true
-    internal:
-        external: false
-        driver: bridge
+# networks:
+#     web:
+#         external: true
+#     internal:
+#         external: false
+#         driver: bridge
 
 services:
   frontend:
